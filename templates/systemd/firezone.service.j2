@@ -8,12 +8,12 @@ DefaultDependencies=no
 
 [Service]
 Type=simple
-ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone-identifier }} 2>/dev/null || true'
-ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone-identifier }} 2>/dev/null || true'
+ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone_identifier }} 2>/dev/null || true'
+ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone_identifier }} 2>/dev/null || true'
 
 ExecStartPre=/usr/bin/env docker create \
                 --rm \
-                --name={{ firezone-identifier }} \
+                --name={{ firezone_identifier }} \
                 --log-driver=none \
                 --cap-drop=ALL \
                 --cap-add=NET_ADMIN \
@@ -26,13 +26,13 @@ ExecStartPre=/usr/bin/env docker create \
 				{{ firezone_container_image }}
 
 
-ExecStart=/usr/bin/env docker start --attach {{ firezone-identifier }}
+ExecStart=/usr/bin/env docker start --attach {{ firezone_identifier }}
 
-ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone-identifier }} 2>/dev/null || true'
-ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone-identifier }} 2>/dev/null || true'
+ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone_identifier }} 2>/dev/null || true'
+ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone_identifier }} 2>/dev/null || true'
 Restart=always
 RestartSec=30
-SyslogIdentifier={{ firezone-identifier }}
+SyslogIdentifier={{ firezone_identifier }}
 
 [Install]
 WantedBy=multi-user.target
