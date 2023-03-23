@@ -17,11 +17,21 @@ To configure and install Firezone on your own server(s), you should use a playbo
 # Configuring this role for your playbook
 
 ```
+##############
+## FIREZONE ##
+##############
 
+firezone_enabled: true
+firezone_hostname: example.org
+
+firezone_default_admin_email: "user@invalid.org"
+firezone_default_admin_password: "<securepassword>"
+
+# Generate this with `openssl rand -base64 32`
+firezone_database_encryption_key: "<secret>"
 ```
 
 ## Support
 
-- Matrix room: [#garage-docker-ansible-deploy:hyteck.de](https://matrix.to/#/#garage-docker-ansible-deploy:hyteck.de)
 
-- Github issues: [moan0s/firezone-docker-ansible-deploy/issues](https://github.com/moan0s/role-firezone/issues)
+- Github issues: [moan0s/role-firezone/issues](https://github.com/moan0s/role-firezone/issues)

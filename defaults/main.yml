@@ -55,8 +55,9 @@ firezone_container_labels_additional_labels: ''
 firezone_telemetry_enabled: false
 firezone_wireguard_container_port: 51820
 
-firezone_guardian_secret_key: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.gd.sc.key', rounds=655555))[-64:] | b64encode }}"
-firezone_database_encryption_key: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.db.ec.key', rounds=655555))[-64:] | b64encode }}"
+firezone_guardian_secret_key: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.gd.sc.key', rounds=655555))[-64:] | b64encode | truncate(32, True, '') }}"
+# We need 32 byte, base64 encodes 3 bytes in 4 chars.
+firezone_database_encryption_key: ""
 firezone_secret_key_base: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.sc.key.base', rounds=655555))[-64:] | b64encode }}"
 firezone_live_view_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.l.vw.sg.salt', rounds=655555))[-64:] | b64encode }}"
 firezone_cookie_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.sg.salt', rounds=655555))[-64:] | b64encode }}"
