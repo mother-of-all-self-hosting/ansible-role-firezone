@@ -31,6 +31,16 @@ firezone_default_admin_password: "<securepassword>"
 firezone_database_encryption_key: "<secret>"
 ```
 
+# Exposed tags
+
+| Tag | Usage |
+| --- | --- |
+| `install-all` | Install Firezone and possible other services (bit faster than setup) |
+| `install-all` | Install only Firezone (bit faster than setup) |
+| `setup-all` | (Un-)Install Firezone and possible other services |
+| `setup-firezone` | (Un-)Install Firezone (only)|
+| `firezone-create-or-reset-admin` | Create the configured admin account or reset the password to the password set in `vars.yml` |
+
 ## Support
 
 
