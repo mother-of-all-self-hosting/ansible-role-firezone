@@ -20,7 +20,7 @@ firezone_env_path: "{{ firezone_config_path }}/env"
 
 firezone_systemd_required_services_list: ['docker.service']
 
-firezone_version: 0.7.23
+firezone_version: 0.7.25
 
 firezone_container_image: "firezone/firezone:{{ firezone_version }}"
 
@@ -55,9 +55,9 @@ firezone_container_labels_additional_labels: ''
 firezone_telemetry_enabled: false
 firezone_wireguard_container_port: 51820
 
-firezone_guardian_secret_key: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.gd.sc.key', rounds=655555) | to_uuid }}"
-firezone_database_encryption_key: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.db.ec.key', rounds=655555) | to_uuid }}"
-firezone_secret_key_base: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.sc.key.base', rounds=655555) | to_uuid }}"
-firezone_live_view_signing_salt: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.l.vw.sg.salt', rounds=655555) | to_uuid }}"
-firezone_cookie_signing_salt: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.sg.salt', rounds=655555) | to_uuid }}"
-firezone_cookie_encryption_salt: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.ec.salt', rounds=655555) | to_uuid }}"
+firezone_guardian_secret_key: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.gd.sc.key', rounds=655555))[-64:] | b64encode }}"
+firezone_database_encryption_key: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.db.ec.key', rounds=655555))[-64:] | b64encode }}"
+firezone_secret_key_base: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.sc.key.base', rounds=655555))[-64:] | b64encode }}"
+firezone_live_view_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.l.vw.sg.salt', rounds=655555))[-64:] | b64encode }}"
+firezone_cookie_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.sg.salt', rounds=655555))[-64:] | b64encode }}"
+firezone_cookie_encryption_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.ec.salt', rounds=655555))[-64:] | b64encode }}"

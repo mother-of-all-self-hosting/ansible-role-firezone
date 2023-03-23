@@ -16,6 +16,15 @@
   with_items:
     - {path: "{{ firezone_base_path }}", when: true}
     - {path: "{{ firezone_config_path }}", when: true}
+
+- name: Ensure Firezone data path exists
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ firezone_uid }}"
+    group: "{{ firezone_gid }}"
+  with_items:
     - {path: "{{ firezone_data_path }}", when: true}
 
 

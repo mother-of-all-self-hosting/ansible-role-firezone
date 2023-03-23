@@ -19,12 +19,16 @@ ExecStartPre=/usr/bin/env docker create \
                 --cap-add=NET_ADMIN \
                 --cap-add=SYS_MODULE \
                 --sysctl="net.ipv6.conf.all.disable_ipv6=0" \
+				--label-file={{ firezone_config_path }}/labels \
                 --network={{ firezone_container_network }} \
                 --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
                 --read-only \
                 --env-file={{ firezone_env_path }} \
 				{{ firezone_container_image }}
 
+{% for network in firezone_container_additional_networks %}
+ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} network connect {{ network }} {{ firezone_identifier }}
+{% endfor %}
 
 ExecStart=/usr/bin/env docker start --attach {{ firezone_identifier }}
 
