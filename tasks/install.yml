@@ -1,5 +1,11 @@
 ---
 
+- name: Ensure Firezone network is created in Docker
+  community.docker.docker_network:
+    name: "{{ firezone_docker_network }}"
+    driver: bridge
+
+
 - name: Ensure Firezone path exists
   ansible.builtin.file:
     path: "{{ item.path }}"
@@ -8,15 +14,15 @@
     owner: "{{ firezone_user_uid }}"
     group: "{{ firezone_user_gid }}"
   with_items:
-    - {path: "{{ firezone_firezone_base_path }}", when: true}
-    - {path: "{{ firezone_firezone_config_path }}", when: true}
-    - {path: "{{ firezone_firezone_data_path }}", when: true}
+    - {path: "{{ firezone_base_path }}", when: true}
+    - {path: "{{ firezone_config_path }}", when: true}
+    - {path: "{{ firezone_data_path }}", when: true}
 
 
 - name: Ensure Firezone traefik labels are installed
   ansible.builtin.template:
     src: "{{ role_path }}/templates/labels.j2"
-    dest: "{{ firezone_firezone_config_path }}/labels"
+    dest: "{{ firezone_config_path }}/labels"
     owner: "{{ firezone_user_uid }}"
     group: "{{ firezone_user_gid }}"
     mode: 0640
@@ -25,14 +31,14 @@
 - name: Ensure firezone node configuration is deployed
   ansible.builtin.template:
     src: "{{ role_path }}/templates/env.j2"
-    dest: "{{ firezone_firezone_config_path }}/env"
+    dest: "{{ firezone_config_path }}/env"
     owner: "{{ firezone_user_uid }}"
     group: "{{ firezone_user_gid }}"
     mode: 0640
 
 - name: Ensure Firezone container image is pulled
   community.docker.docker_image:
-    name: "{{ firezone_firezone_container_image }}"
+    name: "{{ firezone_container_image }}"
     source: "{{ 'pull' if ansible_version.major > 2 or ansible_version.minor > 7 else omit }}"
 
 - name: Ensure firezone.service installed

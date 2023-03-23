@@ -5,7 +5,7 @@
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/install.yml"
   tags:
     - setup-all
-    - setup-garage
+    - setup-firezone
     - install-all
     - install-garage
 
@@ -14,4 +14,4 @@
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/uninstall.yml"
   tags:
     - setup-all
-    - setup-garage
+    - setup-firezone
