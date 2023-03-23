@@ -1,13 +1,15 @@
 ---
 
 firezone_enabled: true
-firezone_identifier: "firezone"
+firezone_identifier: firezone
 
 firezone_hostname: ''
+firezone_generic_secret: ""
+firezone_default_admin_email: ""
+firezone_default_admin_password: ""
 
-firezone_user_username: {{ firezone_identifier }}
-firezone_user_uid: 3994
-firezone_user_gid: 3994
+firezone_uid: 3994
+firezone_gid: 3994
 
 firezone_playbook_traefik_role_enabled: true
 
@@ -51,3 +53,11 @@ firezone_container_labels_additional_labels: ''
 
 
 firezone_telemetry_enabled: false
+firezone_wireguard_container_port: 51820
+
+firezone_guardian_secret_key: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.gd.sc.key', rounds=655555) | to_uuid }}"
+firezone_database_encryption_key: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.db.ec.key', rounds=655555) | to_uuid }}"
+firezone_secret_key_base: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.sc.key.base', rounds=655555) | to_uuid }}"
+firezone_live_view_signing_salt: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.l.vw.sg.salt', rounds=655555) | to_uuid }}"
+firezone_cookie_signing_salt: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.sg.salt', rounds=655555) | to_uuid }}"
+firezone_cookie_encryption_salt: "{{ '%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.ec.salt', rounds=655555) | to_uuid }}"

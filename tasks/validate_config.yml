@@ -7,3 +7,6 @@
   when: "vars[item] == ''"
   with_items:
     - firezone_hostname
+    - firezone_generic_secret
+    - firezone_default_admin_email
+    - firezone_default_admin_password

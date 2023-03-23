@@ -26,7 +26,7 @@ ExecStartPre=/usr/bin/env docker create \
 				{{ firezone_container_image }}
 
 
-ExecStart=/usr/bin/env docker start --attach firezone
+ExecStart=/usr/bin/env docker start --attach {{ firezone-identifier }}
 
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone-identifier }} 2>/dev/null || true'
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone-identifier }} 2>/dev/null || true'
@@ -34,3 +34,5 @@ Restart=always
 RestartSec=30
 SyslogIdentifier={{ firezone-identifier }}
 
+[Install]
+WantedBy=multi-user.target

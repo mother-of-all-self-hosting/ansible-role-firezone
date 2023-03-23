@@ -2,12 +2,21 @@
 
 - block:
     - when: firezone_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/validate_config.yml"
+  tags:
+    - setup-all
+    - setup-firezone
+    - install-all
+    - install-firezone
+
+- block:
+    - when: firezone_enabled | bool
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/install.yml"
   tags:
     - setup-all
     - setup-firezone
     - install-all
-    - install-garage
+    - install-firezone
 
 - block:
     - when: not firezone_enabled | bool
