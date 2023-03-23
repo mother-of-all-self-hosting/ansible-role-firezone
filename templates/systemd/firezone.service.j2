@@ -19,7 +19,7 @@ ExecStartPre=/usr/bin/env docker create \
                 --cap-add=NET_ADMIN \
                 --cap-add=SYS_MODULE \
                 --sysctl="net.ipv6.conf.all.disable_ipv6=0" \
-				--label-file={{ firezone_config_path }}/labels \
+                --label-file={{ firezone_config_path }}/labels \
                 --network={{ firezone_container_network }} \
                 -p {{ firezone_wireguard_bind_port }}:{{ firezone_wireguard_container_port }}/udp \
                 --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
