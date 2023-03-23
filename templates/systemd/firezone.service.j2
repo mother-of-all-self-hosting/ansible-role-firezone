@@ -1,0 +1,36 @@
+[Unit]
+Description=Firezone VPN
+{% for service in firezone_systemd_required_services_list %}
+Requires={{ service }}
+After={{ service }}
+{% endfor %}
+DefaultDependencies=no
+
+[Service]
+Type=simple
+ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone-identifier }} 2>/dev/null || true'
+ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone-identifier }} 2>/dev/null || true'
+
+ExecStartPre=/usr/bin/env docker create \
+                --rm \
+                --name={{ firezone-identifier }} \
+                --log-driver=none \
+                --cap-drop=ALL \
+                --cap-add=NET_ADMIN \
+                --cap-add=SYS_MODULE \
+                --sysctl="net.ipv6.conf.all.disable_ipv6=0" \
+                --network={{ firezone_container_network }} \
+                --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
+                --read-only \
+                --env-file={{ firezone_env_path }} \
+				{{ firezone_container_image }}
+
+
+ExecStart=/usr/bin/env docker start --attach firezone
+
+ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone-identifier }} 2>/dev/null || true'
+ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone-identifier }} 2>/dev/null || true'
+Restart=always
+RestartSec=30
+SyslogIdentifier={{ firezone-identifier }}
+

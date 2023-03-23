@@ -1,0 +1,53 @@
+---
+
+firezone_enabled: true
+firezone_identifier: "firezone"
+
+firezone_hostname: ''
+
+firezone_user_username: {{ firezone_identifier }}
+firezone_user_uid: 3994
+firezone_user_gid: 3994
+
+firezone_playbook_traefik_role_enabled: true
+
+firezone_base_path: "/{{ firezone_identifier }}"
+firezone_config_path: "{{ firezone_base_path }}/config"
+firezone_data_path: "{{ firezone_base_path }}/data"
+firezone_env_path: "{{ firezone_config_path }}/env"
+
+firezone_systemd_required_services_list: ['docker.service']
+
+firezone_version: 0.7.23
+
+firezone_container_image: "firezone/firezone:{{ firezone_version }}"
+
+firezone_container_network: '{{ firezone_identifier }}'
+
+firezone_webui_bind_port: 13000
+
+# A list of additional container networks that the container would be connected to.
+# The role does not create these networks, so make sure they already exist.
+# Use this to expose this container to a reverse proxy, which runs in a different container network.
+firezone_container_additional_networks: []
+
+# firezone_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
+# See `roles/custom/firezone_firezone/templates/labels.j2` for details.
+#
+# To inject your own other container labels, see `firezone_container_labels_additional_labels`.
+firezone_container_labels_traefik_enabled: false
+firezone_container_labels_traefik_docker_network: ""
+firezone_container_labels_traefik_entrypoints: web-secure
+firezone_container_labels_traefik_tls_certResolver: default  # noqa var-naming
+
+# firezone_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
+# See `roles/custom/collabora_online/templates/labels.j2` for details.
+#
+# Example:
+# firezone_container_labels_additional_labels: |
+#   my.label=1
+#   another.label="here"
+firezone_container_labels_additional_labels: ''
+
+
+firezone_telemetry_enabled: false
