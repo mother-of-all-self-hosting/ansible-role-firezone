@@ -54,6 +54,7 @@ firezone_container_labels_additional_labels: ''
 
 firezone_telemetry_enabled: false
 firezone_wireguard_container_port: 51820
+firezone_wireguard_bind_port: "{{ firezone_wireguard_container_port }}"
 
 firezone_guardian_secret_key: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.gd.sc.key', rounds=655555))[-64:] | b64encode | truncate(32, True, '') }}"
 # We need 32 byte, base64 encodes 3 bytes in 4 chars.
