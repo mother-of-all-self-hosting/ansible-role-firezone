@@ -11,7 +11,7 @@ Type=simple
 ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone_identifier }} 2>/dev/null || true'
 ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone_identifier }} 2>/dev/null || true'
 
-ExecStartPre=/usr/bin/env docker create \
+ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} \
                 --rm \
                 --name={{ firezone_identifier }} \
                 --log-driver=none \
@@ -32,7 +32,7 @@ ExecStartPre=/usr/bin/env docker create \
 ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} network connect {{ network }} {{ firezone_identifier }}
 {% endfor %}
 
-ExecStart=/usr/bin/env docker start --attach {{ firezone_identifier }}
+ExecStart={{ devture_systemd_docker_base_host_command_docker }} start --attach {{ firezone_identifier }}
 
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ firezone_identifier }} 2>/dev/null || true'
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone_identifier }} 2>/dev/null || true'
