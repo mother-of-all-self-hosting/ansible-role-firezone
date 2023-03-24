@@ -7,17 +7,17 @@
 
 - when: firezone_service_stat.stat.exists | bool
   block:
-  - name: Ensure firezone services are stopped
-    ansible.builtin.service:
-      name: "{{ firezone_identifier }}"
-      state: stopped
-      daemon_reload: true
-  - name: Ensure firezone service doesn't exist
-    ansible.builtin.file:
-      dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ firezone_identifier }}.service"
-      state: absent
+    - name: Ensure firezone services are stopped
+      ansible.builtin.service:
+        name: "{{ firezone_identifier }}"
+        state: stopped
+        daemon_reload: true
+    - name: Ensure firezone service doesn't exist
+      ansible.builtin.file:
+        dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ firezone_identifier }}.service"
+        state: absent
 
-  - name: Ensure firezone base path is files deleted (make sure to delete node data)
-    ansible.builtin.file:
-      path: "{{ firezone_base_path }}"
-      state: absent
+    - name: Ensure firezone base path is files deleted (make sure to delete node data)
+      ansible.builtin.file:
+        path: "{{ firezone_base_path }}"
+        state: absent
