@@ -1,5 +1,5 @@
 [Unit]
-Description=Firezone VPN
+Description=Firezone VPN ({{ firezone_identifier }})
 {% for service in firezone_systemd_required_services_list %}
 Requires={{ service }}
 After={{ service }}
@@ -15,6 +15,7 @@ ExecStartPre=/usr/bin/env docker create \
                 --rm \
                 --name={{ firezone_identifier }} \
                 --log-driver=none \
+                --user {{ firezone_uid }}:{{ firezone_gid }} \
                 --cap-drop=ALL \
                 --cap-add=NET_ADMIN \
                 --cap-add=SYS_MODULE \
