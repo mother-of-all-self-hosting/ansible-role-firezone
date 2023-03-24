@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: firezone
   author: Julian-Samuel Gebühr
   company: Hyteck
   description: Ansible role to install Firezone, a self-hosted VPN server and Linux firewall
