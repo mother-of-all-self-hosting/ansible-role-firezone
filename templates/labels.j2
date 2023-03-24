@@ -1,13 +1,54 @@
 {% if firezone_container_labels_traefik_enabled %}
+traefik.enable=true
+
 {% if firezone_container_labels_traefik_docker_network %}
 traefik.docker.network={{ firezone_container_labels_traefik_docker_network }}
 {% endif %}
-traefik.enable=true
+
+{% set middlewares = [] %}
+
+{% if firezone_container_labels_traefik_path_prefix != '/' %}
+traefik.http.middlewares.{{ firezone_identifier }}-slashless-redirect.redirectregex.regex=({{ firezone_container_labels_traefik_path_prefix | quote }})$
+traefik.http.middlewares.{{ firezone_identifier }}-slashless-redirect.redirectregex.replacement=${1}/
+{% set middlewares = middlewares + [firezone_identifier + '-slashless-redirect'] %}
 {% endif %}
-traefik.http.routers.{{ firezone_identifier }}.rule=Host("{{ firezone_hostname }}")
+
+{% if firezone_container_labels_traefik_path_prefix != '/' %}
+traefik.http.middlewares.{{ firezone_identifier }}-strip-prefix.stripprefix.prefixes={{ firezone_container_labels_traefik_path_prefix }}
+{% set middlewares = middlewares + [firezone_identifier + '-strip-prefix'] %}
+{% endif %}
+
+{% if firezone_container_labels_traefik_additional_request_headers.keys() | length > 0 %}
+{% for name, value in firezone_container_labels_traefik_additional_request_headers.items() %}
+traefik.http.middlewares.{{ firezone_identifier }}-add-request-headers.headers.customrequestheaders.{{ name }}={{ value }}
+{% endfor %}
+{% set middlewares = middlewares + [firezone_identifier + '-add-request-headers'] %}
+{% endif %}
+
+{% if firezone_container_labels_traefik_additional_response_headers.keys() | length > 0 %}
+{% for name, value in firezone_container_labels_traefik_additional_response_headers.items() %}
+traefik.http.middlewares.{{ firezone_identifier }}-add-response-headers.headers.customresponseheaders.{{ name }}={{ value }}
+{% endfor %}
+{% set middlewares = middlewares + [firezone_identifier + '-add-response-headers'] %}
+{% endif %}
+
+
+traefik.http.routers.{{ firezone_identifier }}.rule={{ firezone_container_labels_traefik_rule }}
+{% if firezone_container_labels_traefik_priority | int > 0 %}
+traefik.http.routers.{{ firezone_identifier }}.priority={{ firezone_container_labels_traefik_priority }}
+{% endif %}
+{% if middlewares | length > 0 %}
+traefik.http.routers.{{ firezone_identifier }}.middlewares={{ middlewares | join(',') }}
+{% endif %}
 traefik.http.routers.{{ firezone_identifier }}.service={{ firezone_identifier }}
 traefik.http.routers.{{ firezone_identifier }}.entrypoints={{ firezone_container_labels_traefik_entrypoints }}
+traefik.http.routers.{{ firezone_identifier }}.tls={{ firezone_container_labels_traefik_tls | to_json }}
+{% if firezone_container_labels_traefik_tls %}
 traefik.http.routers.{{ firezone_identifier }}.tls.certResolver={{ firezone_container_labels_traefik_tls_certResolver }}
+{% endif %}
 traefik.http.services.{{ firezone_identifier }}.loadbalancer.server.port={{ firezone_webui_bind_port }}
+
+
+{% endif %}
 
 {{ firezone_container_labels_additional_labels }}
