@@ -1,5 +1,4 @@
 ---
----
 
 - name: Check existence of firezone systemd service
   ansible.builtin.stat:
