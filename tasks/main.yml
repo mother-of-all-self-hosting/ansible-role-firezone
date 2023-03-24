@@ -24,3 +24,9 @@
   tags:
     - setup-all
     - setup-firezone
+
+- block:
+    - when: firezone_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/create-or-reset-admin.yml"
+  tags:
+    - firezone-create-or-reset-admin
