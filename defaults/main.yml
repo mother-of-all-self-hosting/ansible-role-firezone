@@ -8,8 +8,8 @@ firezone_generic_secret: ""
 firezone_default_admin_email: ""
 firezone_default_admin_password: ""
 
-firezone_uid: 3994
-firezone_gid: 3994
+firezone_uid: ''
+firezone_gid: ''
 
 firezone_base_path: "/{{ firezone_identifier }}"
 firezone_config_path: "{{ firezone_base_path }}/config"
