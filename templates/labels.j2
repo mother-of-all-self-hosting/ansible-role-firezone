@@ -4,10 +4,10 @@ traefik.docker.network={{ firezone_container_labels_traefik_docker_network }}
 {% endif %}
 traefik.enable=true
 {% endif %}
-traefik.http.routers.firezone.rule=Host("{{ firezone_hostname }}")
-traefik.http.routers.firezone.service=firezone
-traefik.http.routers.firezone.entrypoints={{ firezone_container_labels_traefik_entrypoints }}
-traefik.http.routers.firezone.tls.certResolver={{ firezone_container_labels_traefik_tls_certResolver }}
-traefik.http.services.firezone.loadbalancer.server.port={{ firezone_webui_bind_port }}
+traefik.http.routers.{{ firezone_identifier }}.rule=Host("{{ firezone_hostname }}")
+traefik.http.routers.{{ firezone_identifier }}.service={{ firezone_identifier }}
+traefik.http.routers.{{ firezone_identifier }}.entrypoints={{ firezone_container_labels_traefik_entrypoints }}
+traefik.http.routers.{{ firezone_identifier }}.tls.certResolver={{ firezone_container_labels_traefik_tls_certResolver }}
+traefik.http.services.{{ firezone_identifier }}.loadbalancer.server.port={{ firezone_webui_bind_port }}
 
 {{ firezone_container_labels_additional_labels }}
