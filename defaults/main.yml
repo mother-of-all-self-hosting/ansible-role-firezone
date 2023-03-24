@@ -20,7 +20,10 @@ firezone_systemd_required_services_list: ['docker.service']
 
 firezone_version: 0.7.25
 
-firezone_container_image: "firezone/firezone:{{ firezone_version }}"
+firezone_container_image: "{{ firezone_container_image_registry_prefix }}firezone/firezone:{{ firezone_container_image_tag }}"
+firezone_container_image_registry_prefix: docker.io/
+firezone_container_image_tag: "{{ firezone_version }}"
+firezone_container_image_force_pull: "{{ firezone_container_image.endswith(':latest') }}"
 
 firezone_container_network: '{{ firezone_identifier }}'
 
