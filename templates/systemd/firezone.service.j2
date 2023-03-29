@@ -15,7 +15,6 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
                 --rm \
                 --name={{ firezone_identifier }} \
                 --log-driver=none \
-                --user {{ firezone_uid }}:{{ firezone_gid }} \
                 --cap-drop=ALL \
                 --cap-add=NET_ADMIN \
                 --cap-add=SYS_MODULE \
