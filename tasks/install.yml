@@ -35,7 +35,6 @@
     owner: "{{ firezone_uid }}"
     group: "{{ firezone_gid }}"
     mode: 0640
-  when: "firezone_playbook_traefik_role_enabled"
 
 - name: Ensure firezone node configuration is deployed
   ansible.builtin.template:
