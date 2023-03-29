@@ -43,6 +43,15 @@ firezone_container_labels_traefik_docker_network: ""
 firezone_container_labels_traefik_entrypoints: web-secure
 firezone_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 
+firezone_database_hostname: ''
+firezone_database_port: 5432
+firezone_database_name: firezone
+firezone_database_username: firezone
+firezone_database_password: ''
+# Use this to set the sslmode parameter of the SSL connection
+# By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
+firezone_database_sslmode: disable
+
 # firezone_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
 # See `roles/custom/collabora_online/templates/labels.j2` for details.
 #
