@@ -1,11 +1,5 @@
 ---
 
-- name: Ensure Firezone network is created in Docker
-  community.docker.docker_network:
-    name: "{{ firezone_container_network }}"
-    driver: bridge
-
-
 - name: Ensure Firezone path exists
   ansible.builtin.file:
     path: "{{ item.path }}"
@@ -27,27 +21,48 @@
   with_items:
     - {path: "{{ firezone_data_path }}", when: true}
 
-
-- name: Ensure Firezone traefik labels are installed
+- name: Ensure Firezone support files installed
   ansible.builtin.template:
     src: "{{ role_path }}/templates/labels.j2"
     dest: "{{ firezone_config_path }}/labels"
     owner: "{{ firezone_uid }}"
     group: "{{ firezone_gid }}"
     mode: 0640
+  with_items:
+    - env
+    - labels
 
-- name: Ensure firezone node configuration is deployed
-  ansible.builtin.template:
-    src: "{{ role_path }}/templates/env.j2"
-    dest: "{{ firezone_config_path }}/env"
-    owner: "{{ firezone_uid }}"
-    group: "{{ firezone_gid }}"
-    mode: 0640
-
-- name: Ensure Firezone container image is pulled
+- name: Ensure Firezone container image is pulled is pulled via community.docker.docker_image
+  when: devture_systemd_docker_base_container_image_pull_method == 'ansible-module'
   community.docker.docker_image:
     name: "{{ firezone_container_image }}"
     source: "{{ 'pull' if ansible_version.major > 2 or ansible_version.minor > 7 else omit }}"
+  register: result
+  retries: "{{ devture_playbook_help_container_retries_count }}"
+  delay: "{{ devture_playbook_help_container_retries_delay }}"
+  until: result is not failed
+
+- name: Ensure Firezone container image is pulled via command
+  when: devture_systemd_docker_base_container_image_pull_method == 'command'
+  ansible.builtin.command:
+    cmd: "{{ devture_systemd_docker_base_host_command_docker }} pull {{ firezone_container_image }}"
+  register: result
+  retries: "{{ devture_playbook_help_container_retries_count }}"
+  delay: "{{ devture_playbook_help_container_retries_delay }}"
+  until: result is not failed
+
+- name: Ensure Firezone container network is created via community.docker.docker_network
+  when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
+  community.docker.docker_network:
+    name: "{{ firezone_container_network }}"
+    driver: bridge
+
+- name: Ensure Firezone container network exists via command
+  when: devture_systemd_docker_base_container_network_creation_method == 'command'
+  ansible.builtin.command:
+    cmd: "{{ devture_systemd_docker_base_host_command_docker }} network create {{ firezone_container_network }}"
+  register: network_creation_result
+  failed_when: network_creation_result.rc != 0 and 'already exists' not in network_creation_result.stderr
 
 - name: Ensure firezone.service installed
   ansible.builtin.template:
