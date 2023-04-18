@@ -2,12 +2,12 @@
 
 ![Firezone Logo](assets/firezone-logo.png)
 
-![Lint badge](https://woodpecker.hyteck.de/api/badges/moan0s/role-firezone/status.svg)
+![Lint badge](https://woodpecker.hyteck.de/api/badges/mother-of-all-self-hosting/ansible-role-firezone/status.svg)
 
 Firezone is a self-hosted VPN server and Linux firewall. This role helps you to set up firezone:
 
 - with everything run in [Docker](https://www.docker.com/) containers
-- powered by [the official Firezone container image](https://hub.docker.com/r/dxflrs/garage)
+- powered by [the official Firezone container image](https://hub.docker.com/r/firezone/firezone)
 
 
 ## Installing
@@ -44,4 +44,4 @@ firezone_database_encryption_key: "<secret>"
 ## Support
 
 
-- Github issues: [moan0s/role-firezone/issues](https://github.com/moan0s/role-firezone/issues)
+- Github issues: [mother-of-all-self-hosting/ansible-role-firezone/issues](https://github.com/mother-of-all-self-hosting/ansible-role-firezone/issues)
