@@ -23,8 +23,8 @@
 
 - name: Ensure Firezone support files installed
   ansible.builtin.template:
-    src: "{{ role_path }}/templates/labels.j2"
-    dest: "{{ firezone_config_path }}/labels"
+    src: "{{ role_path }}/templates/{{ item }}.j2"
+    dest: "{{ firezone_config_path }}/{{ item }}"
     owner: "{{ firezone_uid }}"
     group: "{{ firezone_gid }}"
     mode: 0640
