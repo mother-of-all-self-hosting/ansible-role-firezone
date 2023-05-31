@@ -1,3 +1,5 @@
+**Moved to [mother-of-all-self-hosting/ansible-role-firezone](https://github.com/mother-of-all-self-hosting/ansible-role-firezone)**
+
 # Firezone Ansible Role
 
 ![Firezone Logo](assets/firezone-logo.png)
