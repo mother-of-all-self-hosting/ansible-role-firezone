@@ -18,7 +18,7 @@ firezone_env_path: "{{ firezone_config_path }}/env"
 
 firezone_systemd_required_services_list: ['docker.service']
 
-firezone_version: 0.7.30
+firezone_version: 0.7.35
 
 firezone_container_image: "{{ firezone_container_image_registry_prefix }}firezone/firezone:{{ firezone_container_image_tag }}"
 firezone_container_image_registry_prefix: docker.io/
