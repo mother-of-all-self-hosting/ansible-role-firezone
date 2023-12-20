@@ -72,3 +72,6 @@ firezone_secret_key_base: "{{ ('%s' | format(firezone_generic_secret) | password
 firezone_live_view_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.l.vw.sg.salt', rounds=655555))[-64:] | b64encode }}"
 firezone_cookie_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.sg.salt', rounds=655555))[-64:] | b64encode }}"
 firezone_cookie_encryption_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.ec.salt', rounds=655555))[-64:] | b64encode }}"
+
+# Additional environment variables.
+firezone_environment_variables_additional_variables: ''
