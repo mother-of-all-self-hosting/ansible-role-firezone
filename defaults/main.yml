@@ -73,5 +73,11 @@ firezone_live_view_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | p
 firezone_cookie_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.sg.salt', rounds=655555))[-64:] | b64encode }}"
 firezone_cookie_encryption_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.ec.salt', rounds=655555))[-64:] | b64encode }}"
 
-# Additional environment variables.
+# firezone_environment_variables_additional_variables contains a multiline string with additional valeus to add to the container environment file.
+# See `https://www.firezone.dev/docs/reference/env-vars` for details.
+#
+# Example:
+# firezone_environment_variables_additional_variables: |
+#   MAX_DEVICES_PER_USER=5
+#   CONNECTIVITY_CHECKS_ENABLED=false
 firezone_environment_variables_additional_variables: ''
