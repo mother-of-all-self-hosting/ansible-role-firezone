@@ -1,4 +1,15 @@
 ---
+- name: Ensure Firezone is started
+  ansible.builtin.service:
+    name: "{{ firezone_identifier }}"
+    state: started
+    daemon_reload: true
+  register: start_result
+
+- name: Wait a while, so that the Firezone instance can manage to start
+  ansible.builtin.pause:
+    seconds: 7
+  when: "start_result.changed"
 
 - name: Create or reset admin
   ansible.builtin.shell:
