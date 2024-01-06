@@ -40,7 +40,9 @@ firezone_webui_bind_port: 13000
 # A list of additional container networks that the container would be connected to.
 # The role does not create these networks, so make sure they already exist.
 # Use this to expose this container to a reverse proxy, which runs in a different container network.
-firezone_container_additional_networks: []
+firezone_container_additional_networks: "{{ firezone_container_additional_networks_auto + firezone_container_additional_networks_custom }}"
+firezone_container_additional_networks_auto: []
+firezone_container_additional_networks_custom: []
 
 # firezone_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
 # See `roles/custom/firezone_firezone/templates/labels.j2` for details.
