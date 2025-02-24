@@ -29,7 +29,9 @@ firezone_systemd_wanted_services_list_custom: []
 firezone_version: 0.7.36
 
 firezone_container_image: "{{ firezone_container_image_registry_prefix }}firezone/firezone:{{ firezone_container_image_tag }}"
-firezone_container_image_registry_prefix: docker.io/
+firezone_container_image_registry_prefix: "{{ firezone_container_image_registry_prefix_upstream }}"
+firezone_container_image_registry_prefix_upstream: "{{ firezone_container_image_registry_prefix_upstream_default }}"
+firezone_container_image_registry_prefix_upstream_default: docker.io/
 firezone_container_image_tag: "{{ firezone_version }}"
 firezone_container_image_force_pull: "{{ firezone_container_image.endswith(':latest') }}"
 
