@@ -2,29 +2,23 @@
 SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
 SPDX-FileCopyrightText: 2023 Nikita Chernyi
 SPDX-FileCopyrightText: 2023 Slavi Pantaleev
+SPDX-FileCopyrightText: 2025 Suguru Hirahara
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-**Moved to [mother-of-all-self-hosting/ansible-role-firezone](https://github.com/mother-of-all-self-hosting/ansible-role-firezone)**
+# Firezone Ansible role
 
-# Firezone Ansible Role
+This is an [Ansible](https://www.ansible.com/) role which installs [Firezone](https://www.firezone.dev/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
 
-![Firezone Logo](assets/firezone-logo.png)
+This role *implicitly* depends on:
 
-![Lint badge](https://woodpecker.hyteck.de/api/badges/mother-of-all-self-hosting/ansible-role-firezone/status.svg)
+- [`com.devture.ansible.role.playbook_help`](https://github.com/devture/com.devture.ansible.role.playbook_help)
+- [`com.devture.ansible.role.systemd_docker_base`](https://github.com/devture/com.devture.ansible.role.systemd_docker_base)
 
-Firezone is a self-hosted VPN server and Linux firewall. This role helps you to set up firezone:
+Check [defaults/main.yml](defaults/main.yml) for the full list of supported options.
 
-- with everything run in [Docker](https://www.docker.com/) containers
-- powered by [the official Firezone container image](https://hub.docker.com/r/firezone/firezone)
-
-
-## Installing
-
-To configure and install Firezone on your own server(s), you should use a playbook like [Mother of all self-hosting](https://github.com/mother-of-all-self-hosting/mash-playbook) or write your own.
-
-# Configuring this role for your playbook
+## Configuration
 
 ```
 ##############
@@ -41,7 +35,7 @@ firezone_default_admin_password: "<securepassword>"
 firezone_database_encryption_key: "<secret>"
 ```
 
-# Exposed tags
+## Exposed tags
 
 | Tag | Usage |
 | --- | --- |
@@ -50,8 +44,3 @@ firezone_database_encryption_key: "<secret>"
 | `setup-all` | (Un-)Install Firezone and possible other services |
 | `setup-firezone` | (Un-)Install Firezone (only)|
 | `firezone-create-or-reset-admin` | Create the configured admin account or reset the password to the password set in `vars.yml` |
-
-## Support
-
-
-- Github issues: [mother-of-all-self-hosting/ansible-role-firezone/issues](https://github.com/mother-of-all-self-hosting/ansible-role-firezone/issues)
