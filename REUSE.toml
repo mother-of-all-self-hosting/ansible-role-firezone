@@ -9,6 +9,7 @@ version = 1
 path = [
     ".config/ansible-lint.yml",
     ".gitignore",
+    ".github/renovate.json",
     ".woodpecker.yml",
     "meta/main.yml"
 ]
