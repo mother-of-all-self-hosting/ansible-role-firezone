@@ -1,3 +1,11 @@
+<!--
+SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
+SPDX-FileCopyrightText: 2023 Nikita Chernyi
+SPDX-FileCopyrightText: 2023 Slavi Pantaleev
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 **Moved to [mother-of-all-self-hosting/ansible-role-firezone](https://github.com/mother-of-all-self-hosting/ansible-role-firezone)**
 
 # Firezone Ansible Role
