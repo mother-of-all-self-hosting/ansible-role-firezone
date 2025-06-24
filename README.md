@@ -21,9 +21,11 @@ Check [defaults/main.yml](defaults/main.yml) for the full list of supported opti
 ## Configuration
 
 ```
-##############
-## FIREZONE ##
-##############
+########################################################################
+#                                                                      #
+# firezone                                                             #
+#                                                                      #
+########################################################################
 
 firezone_enabled: true
 firezone_hostname: example.org
@@ -33,6 +35,12 @@ firezone_default_admin_password: "<securepassword>"
 
 # Generate this with `openssl rand -base64 32`
 firezone_database_encryption_key: "<secret>"
+
+########################################################################
+#                                                                      #
+# /firezone                                                            #
+#                                                                      #
+########################################################################
 ```
 
 ## Exposed tags
