@@ -9,6 +9,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Firezone Ansible role
 
+>[!WARNING]
+> This role is configured to install the legacy 0.7 version of Firezone which has reached end-of-life status and stopped receiving updates since January 31st, 2024. For later versions, Firezone, Inc. does not provide support for self-hosting in production, while the source code remains provided for self-hosting Firezone for merely *educational* or *hobby* purposes. See [this page](https://web.archive.org/web/20241230194456/https://github.com/firezone/firezone/blob/main/docs/README.md#can-i-self-host-firezone) for details.
+
 This is an [Ansible](https://www.ansible.com/) role which installs [Firezone](https://www.firezone.dev/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
 
 This role *implicitly* depends on:
