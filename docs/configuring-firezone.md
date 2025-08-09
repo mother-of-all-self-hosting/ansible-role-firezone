@@ -19,14 +19,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Setting up Firezone
 
-This is an [Ansible](https://www.ansible.com/) role which installs [Firezone](https://github.com/drakkan/firezone/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
+This is an [Ansible](https://www.ansible.com/) role which installs [Firezone](https://www.firezone.dev/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
 
-Firezone is a full-featured and highly configurable event-driven file transfer solution. It supports SFTP, HTTP/S, FTP/S and WebDAV, and can connect to storage backends including local filesystem, S3 (compatible) Object Storage, Google Cloud Storage, Azure Blob Storage, and other SFTP servers.
+Firezone is a self-hosted VPN server based on [WireGuard](https://www.wireguard.com/) with a web UI.
 
-See the project's [documentation](https://docs.firezone.com/latest/) to learn what Firezone does and why it might be useful to you.
-
->[!NOTE]
-> There are two versions of Firezone provided by the developer: the free (as in speech) version released under [AGPL 3.0 license](https://github.com/drakkan/firezone/blob/main/LICENSE) and the nonfree ["Enterprise" version](https://docs.firezone.com/enterprise/#enterprise-edition). This role makes it possible for you to install the former (the free version). See [this page](https://firezone.com/compliance.html) for the official information about licensing.
+See the project's [documentation](https://www.firezone.dev/kb) to learn what Firezone does and why it might be useful to you.
 
 ## Prerequisites
 
@@ -34,8 +31,7 @@ See the project's [documentation](https://docs.firezone.com/latest/) to learn wh
 
 You may need to open the following ports on your server:
 
-- `2022` — port number for SFTP service
-- `10080` — port number for WebDAV service
+- `51820` over **UDP**, controlled by `firezone_wireguard_bind_port` — used for [Wireguard](https://www.wireguard.com/) connections
 
 Docker automatically opens these ports in the server's firewall, so you likely don't need to do anything. If you use another firewall in front of the server, you may need to adjust it.
 
@@ -71,60 +67,27 @@ firezone_hostname: "example.com"
 
 After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
 
-### Specify data driver
-
-You also need specify "data driver" for Firezone. It is possible to use a driver like Postgres and MySQL (MariaDB), as well as SQLite and CockroachDB.
-
-To use Postgres, add the following configuration to your `vars.yml` file:
-
-```yaml
-firezone_environment_variables_data_provider_driver: postgresql
-```
-
-Please note that it is necessary to add environment variables manually for database other than Postgres and MySQL (MariaDB).
-
-Refer to [this section](https://docs.firezone.com/latest/config-file/#data-provider) on the official documentation for options to be configured.
-
-### Enable interfaces for WebAdmin and WebClient (optional)
-
-Because the theme used in WebAdmin and WebClient user interfaces is proprietary (see [this section](https://docs.firezone.com/latest/#licensing) for additional information), this role disables them by default.
-
-To enable them, add the following configuration to your `vars.yml` file:
-
-```yaml
-firezone_environment_variables_http_bindings_enable_web_admin: true
-firezone_environment_variables_http_bindings_enable_web_client: true
-```
-
 ### Create the first admin account with environment variables (optional)
 
-To use Firezone, you need to create an admin account. If you enable WebAdmin and open it, you can follow the set up wizard to create the first admin account.
-
-Alternatively, you can create it by adding the following configuration to your `vars.yml` file:
+To use Firezone, you need to create an admin account by adding the following configuration to your `vars.yml` file:
 
 ```yaml
-firezone_environment_variables_data_provider_create_default_admin: true
-firezone_environment_variables_firezone_default_admin_username: ADMIN_USERNAME_HERE
-firezone_environment_variables_firezone_default_admin_password: ADMIN_PASSWORD_HERE
+firezone_default_admin_email: ADMIN_EMAIL_ADDRESS_HERE
+firezone_default_admin_password: ADMIN_PASSWORD_HERE
 ```
 
-Replace `ADMIN_USERNAME_HERE` and `ADMIN_PASSWORD_HERE` with your own values.
+Replace `ADMIN_EMAIL_ADDRESS_HERE` and `ADMIN_PASSWORD_HERE` with your own values.
 
->[!NOTE]
-> Changing those values after creating the user does not update the login credential.
+### Set 32-byte base64 string for secret key
 
-### Enable WebDAV server (optional)
-
-You can enable WebDAV server by adding the following configuration to your `vars.yml` file:
+You also need to specify a **32-byte base64 string** to encrypt integration secrets on the database. To do so, add the following configuration to your `vars.yml` file. The value can be generated with `openssl rand -base64 32` or in another way.
 
 ```yaml
-firezone_environment_variables_webdav_enabled: true
+firezone_database_encryption_key: YOUR_SECRET_KEY_HERE
 ```
 
 >[!NOTE]
-> By default the connection to the WebDAV server is not encrypted with HTTPS. To enable encryption, it is necessary to install a TLS certificate and its private key. See [`defaults/main.yml`](../defaults/main.yml) and [this page](https://docs.firezone.com/latest/config-file/#webdav-server) on the official documentation to check how it should be set up.
-
-<!-- TODO: Have Traefik (ansible-role-traefik) manage the TLS certificate and the private key. -->
+> Other type of values such as one generated with `pwgen -s 64 1` does not work.
 
 ### Extending the configuration
 
@@ -133,13 +96,6 @@ There are some additional things you may wish to configure about the component.
 Take a look at:
 
 - [`defaults/main.yml`](../defaults/main.yml) for some variables that you can customize via your `vars.yml` file. You can override settings (even those that don't have dedicated playbook variables) using the `firezone_environment_variables_additional_variables` variable
-
-See [this page](https://docs.firezone.com/latest/config-file/) for a complete list of Firezone's config options that you could put in `firezone_environment_variables_additional_variables`.
-
-For example, you can enable OpenID Connect (OIDC) for the web interfaces by adding environment variables such as `SFTPGO_HTTPD__BINDINGS__0__OIDC__CONFIG_URL=https://example.com` to it. See [this section](https://docs.firezone.com/latest/config-file/#http-server) for details.
-
->[!NOTE]
-> You can check [this page on the documentation](https://docs.firezone.com/latest/env-vars/) for the conversion rule of settings into environment variables.
 
 ## Installing
 
@@ -153,7 +109,19 @@ If you use the MASH playbook, the shortcut commands with the [`just` program](ht
 
 ## Usage
 
-After running the command for installation, Firezone becomes available at the specified hostname like `https://example.com`. You can connect to the SFTP server with a SFTP client on the port `2022`.
+After running the command for installation, the Firezone instance becomes available at the URL specified with `firezone_hostname`. With the configuration above, the service is hosted at `https://example.com`.
+
+To get started, open the URL with a web browser, and log in to the service with the credentials set to `firezone_default_admin_email` and `firezone_default_admin_password`.
+
+Refer to the [official documentation](https://www.firezone.dev/docs/user-guides/add-devices/) to figure out how to add devices, etc.
+
+### Create or reset admin account
+
+You can run the command below to create the admin account or reset the password to the current password specified on `vars.yml`:
+
+```sh
+just run-tags firezone-create-or-reset-admin
+```
 
 ## Troubleshooting
 

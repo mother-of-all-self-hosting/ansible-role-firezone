@@ -18,40 +18,7 @@ This role *implicitly* depends on:
 
 Check [defaults/main.yml](defaults/main.yml) for the full list of supported options.
 
-## Configuration
-
-```yaml
-########################################################################
-#                                                                      #
-# firezone                                                             #
-#                                                                      #
-########################################################################
-
-firezone_enabled: true
-firezone_hostname: example.org
-
-firezone_default_admin_email: "user@invalid.org"
-firezone_default_admin_password: "<securepassword>"
-
-# Generate this with `openssl rand -base64 32`
-firezone_database_encryption_key: "<secret>"
-
-########################################################################
-#                                                                      #
-# /firezone                                                            #
-#                                                                      #
-########################################################################
-```
-
-## Exposed tags
-
-| Tag | Usage |
-| --- | --- |
-| `install-all` | Install Firezone and possible other services (bit faster than setup) |
-| `install-all` | Install only Firezone (bit faster than setup) |
-| `setup-all` | (Un-)Install Firezone and possible other services |
-| `setup-firezone` | (Un-)Install Firezone (only)|
-| `firezone-create-or-reset-admin` | Create the configured admin account or reset the password to the password set in `vars.yml` |
+💡 See this [document](docs/configuring-firezone.md) for details about setting up the service with this role.
 
 ## Development
 
