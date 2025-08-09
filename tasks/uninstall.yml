@@ -1,4 +1,6 @@
 # SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
+# SPDX-FileCopyrightText: 2023 Slavi Pantaleev
+# SPDX-FileCopyrightText: 2025 Suguru Hirahara
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -11,17 +13,34 @@
 - name: Uninstall Firezone systemd services and files
   when: firezone_service_stat.stat.exists | bool
   block:
-    - name: Ensure Firezone services are stopped
+    - name: Ensure Firezone systemd service is stopped
       ansible.builtin.service:
         name: "{{ firezone_identifier }}"
         state: stopped
+        enabled: false
         daemon_reload: true
-    - name: Ensure Firezone service doesn't exist
+
+    - name: Ensure Firezone systemd service does not exist
       ansible.builtin.file:
-        dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ firezone_identifier }}.service"
+        path: "{{ devture_systemd_docker_base_systemd_path }}/{{ firezone_identifier }}.service"
         state: absent
 
-    - name: Ensure Firezone base path is files deleted (make sure to delete node data)
+    - name: Ensure Firezone container network does not exist via community.docker.docker_network
+      when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
+      community.docker.docker_network:
+        name: "{{ firezone_container_network }}"
+        state: absent
+
+    - name: Ensure Firezone container network does not exist via ansible.builtin.command
+      when: devture_systemd_docker_base_container_network_creation_method == 'command'
+      ansible.builtin.command:
+        cmd: >-
+          {{ devture_systemd_docker_base_host_command_docker }} network rm
+          {{ firezone_container_network }}
+      register: network_deletion_result
+      changed_when: firezone_container_network in network_deletion_result.stdout
+
+    - name: Ensure Firezone path does not exist
       ansible.builtin.file:
         path: "{{ firezone_base_path }}"
         state: absent
