@@ -3,34 +3,32 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-
-- block:
-    - when: firezone_enabled | bool
+- name: Perform Firezone installation tasks
+  when: firezone_enabled | bool
+  tags:
+    - setup-all
+    - setup-firezone
+    - install-all
+    - install-firezone
+  block:
+    - name: Validate Firezone configuration
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/validate_config.yml"
-  tags:
-    - setup-all
-    - setup-firezone
-    - install-all
-    - install-firezone
-
-- block:
-    - when: firezone_enabled | bool
+    - name: Install Firezone
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/install.yml"
+
+- name: Perform Firezone uninstallation tasks
+  when: not firezone_enabled | bool
   tags:
     - setup-all
     - setup-firezone
-    - install-all
-    - install-firezone
-
-- block:
-    - when: not firezone_enabled | bool
+  block:
+    - name: Uninstall Firezone
       ansible.builtin.include_tasks: "{{ role_path }}/tasks/uninstall.yml"
-  tags:
-    - setup-all
-    - setup-firezone
 
-- block:
-    - when: firezone_enabled | bool
-      ansible.builtin.include_tasks: "{{ role_path }}/tasks/create-or-reset-admin.yml"
+- name: Perform admin user creation tasks
+  when: firezone_enabled | bool
   tags:
     - firezone-create-or-reset-admin
+  block:
+    - name: Create or reset Firezone admin user
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/create-or-reset-admin.yml"

@@ -81,7 +81,6 @@ firezone_database_sslmode: disable
 #   another.label="here"
 firezone_container_labels_additional_labels: ''
 
-
 firezone_telemetry_enabled: false
 firezone_wireguard_container_port: 51820
 firezone_wireguard_bind_port: "{{ firezone_wireguard_container_port }}"
@@ -93,7 +92,7 @@ firezone_live_view_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | p
 firezone_cookie_signing_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.sg.salt', rounds=655555))[-64:] | b64encode }}"
 firezone_cookie_encryption_salt: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.ck.ec.salt', rounds=655555))[-64:] | b64encode }}"
 
-# firezone_environment_variables_additional_variables contains a multiline string with additional valeus to add to the container environment file.
+# firezone_environment_variables_additional_variables contains a multiline string with additional values to add to the container environment file.
 # See `https://www.firezone.dev/docs/reference/env-vars` for details.
 #
 # Example:

@@ -17,5 +17,5 @@
   when: "start_result.changed"
 
 - name: Create or reset admin
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: "{{ devture_systemd_docker_base_host_command_docker }} exec {{ firezone_identifier }} bin/create-or-reset-admin"

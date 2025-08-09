@@ -20,7 +20,7 @@ Check [defaults/main.yml](defaults/main.yml) for the full list of supported opti
 
 ## Configuration
 
-```
+```yaml
 ########################################################################
 #                                                                      #
 # firezone                                                             #
@@ -52,3 +52,9 @@ firezone_database_encryption_key: "<secret>"
 | `setup-all` | (Un-)Install Firezone and possible other services |
 | `setup-firezone` | (Un-)Install Firezone (only)|
 | `firezone-create-or-reset-admin` | Create the configured admin account or reset the password to the password set in `vars.yml` |
+
+## Development
+
+You can optionally install [pre-commit](https://pre-commit.com/) so that simple mistakes are checked and noticed before changes are pushed to a remote branch. See [`.pre-commit-config.yaml`](./.pre-commit-config.yaml) for which hooks are to be executed.
+
+See [this section](https://pre-commit.com/#usage) on the official documentation for usage.

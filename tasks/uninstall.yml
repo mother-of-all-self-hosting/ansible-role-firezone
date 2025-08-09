@@ -3,13 +3,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-
 - name: Check existence of firezone systemd service
   ansible.builtin.stat:
     path: "{{ devture_systemd_docker_base_systemd_path }}/{{ firezone_identifier }}.service"
   register: firezone_service_stat
 
-- when: firezone_service_stat.stat.exists | bool
+- name: Uninstall Firezone systemd services and files
+  when: firezone_service_stat.stat.exists | bool
   block:
     - name: Ensure firezone services are stopped
       ansible.builtin.service:
