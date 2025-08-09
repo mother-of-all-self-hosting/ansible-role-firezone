@@ -1,7 +1,9 @@
+---
 galaxy_info:
-  role_name: firezone
   author: Julian-Samuel Gebühr
   company: Hyteck
+  role_name: firezone
+  namespace: mash
   description: Ansible role to install Firezone, a self-hosted VPN server and Linux firewall
   platforms:
     - name: Debian
@@ -17,4 +19,4 @@ galaxy_info:
       versions:
         - all
   license: AGPL-3.0-or-later
-  min_ansible_version: '2.1'
+  min_ansible_version: "2.1"
