@@ -28,13 +28,13 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       --cap-drop=ALL \
       --cap-add=NET_ADMIN \
       --cap-add=SYS_MODULE \
+      --read-only \
       --sysctl="net.ipv6.conf.all.disable_ipv6=0" \
-      --label-file={{ firezone_config_path }}/labels \
       --network={{ firezone_container_network }} \
       -p {{ firezone_wireguard_bind_port }}:{{ firezone_wireguard_container_port }}/udp \
-      --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
-      --read-only \
       --env-file={{ firezone_env_path }} \
+      --label-file={{ firezone_config_path }}/labels \
+      --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
       {{ firezone_container_image }}
 
 {% for network in firezone_container_additional_networks %}
