@@ -22,20 +22,20 @@ ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_s
 ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ firezone_identifier }} 2>/dev/null || true'
 
 ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
-                --rm \
-                --name={{ firezone_identifier }} \
-                --log-driver=none \
-                --cap-drop=ALL \
-                --cap-add=NET_ADMIN \
-                --cap-add=SYS_MODULE \
-                --sysctl="net.ipv6.conf.all.disable_ipv6=0" \
-                --label-file={{ firezone_config_path }}/labels \
-                --network={{ firezone_container_network }} \
-                -p {{ firezone_wireguard_bind_port }}:{{ firezone_wireguard_container_port }}/udp \
-                --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
-                --read-only \
-                --env-file={{ firezone_env_path }} \
-				{{ firezone_container_image }}
+      --rm \
+      --name={{ firezone_identifier }} \
+      --log-driver=none \
+      --cap-drop=ALL \
+      --cap-add=NET_ADMIN \
+      --cap-add=SYS_MODULE \
+      --sysctl="net.ipv6.conf.all.disable_ipv6=0" \
+      --label-file={{ firezone_config_path }}/labels \
+      --network={{ firezone_container_network }} \
+      -p {{ firezone_wireguard_bind_port }}:{{ firezone_wireguard_container_port }}/udp \
+      --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
+      --read-only \
+      --env-file={{ firezone_env_path }} \
+      {{ firezone_container_image }}
 
 {% for network in firezone_container_additional_networks %}
 ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} network connect {{ network }} {{ firezone_identifier }}
