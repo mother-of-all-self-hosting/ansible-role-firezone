@@ -7,34 +7,22 @@
 
 ---
 # Project source code URL: https://github.com/firezone/firezone
+
 firezone_enabled: true
+
 firezone_identifier: firezone
-
-firezone_hostname: ''
-firezone_generic_secret: ""
-firezone_default_admin_email: ""
-firezone_default_admin_password: ""
-
-firezone_uid: ''
-firezone_gid: ''
-
 firezone_base_path: "/{{ firezone_identifier }}"
 firezone_config_path: "{{ firezone_base_path }}/config"
 firezone_data_path: "{{ firezone_base_path }}/data"
 firezone_env_path: "{{ firezone_config_path }}/env"
 
-firezone_systemd_required_services_list: "{{ firezone_systemd_required_services_list_default + firezone_systemd_required_services_list_auto + firezone_systemd_required_services_list_custom }}"
-firezone_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
-firezone_systemd_required_services_list_auto: []
-firezone_systemd_required_services_list_custom: []
-
-firezone_systemd_wanted_services_list: "{{ firezone_systemd_wanted_services_list_default + firezone_systemd_wanted_services_list_auto + firezone_systemd_wanted_services_list_custom }}"
-firezone_systemd_wanted_services_list_default: []
-firezone_systemd_wanted_services_list_auto: []
-firezone_systemd_wanted_services_list_custom: []
-
 # renovate: datasource=docker depName=firezone/firezone
 firezone_version: 0.7.36
+
+firezone_uid: ''
+firezone_gid: ''
+
+firezone_hostname: ''
 
 firezone_container_image: "{{ firezone_container_image_registry_prefix }}firezone/firezone:{{ firezone_container_image_tag }}"
 firezone_container_image_registry_prefix: "{{ firezone_container_image_registry_prefix_upstream }}"
@@ -63,6 +51,25 @@ firezone_container_labels_traefik_docker_network: ""
 firezone_container_labels_traefik_entrypoints: web-secure
 firezone_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 
+# firezone_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
+# See `roles/custom/collabora_online/templates/labels.j2` for details.
+#
+# Example:
+# firezone_container_labels_additional_labels: |
+#   my.label=1
+#   another.label="here"
+firezone_container_labels_additional_labels: ''
+
+firezone_systemd_required_services_list: "{{ firezone_systemd_required_services_list_default + firezone_systemd_required_services_list_auto + firezone_systemd_required_services_list_custom }}"
+firezone_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
+firezone_systemd_required_services_list_auto: []
+firezone_systemd_required_services_list_custom: []
+
+firezone_systemd_wanted_services_list: "{{ firezone_systemd_wanted_services_list_default + firezone_systemd_wanted_services_list_auto + firezone_systemd_wanted_services_list_custom }}"
+firezone_systemd_wanted_services_list_default: []
+firezone_systemd_wanted_services_list_auto: []
+firezone_systemd_wanted_services_list_custom: []
+
 firezone_database_hostname: ''
 firezone_database_port: 5432
 firezone_database_name: firezone
@@ -72,14 +79,9 @@ firezone_database_password: ''
 # By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
 firezone_database_sslmode: disable
 
-# firezone_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
-# See `roles/custom/collabora_online/templates/labels.j2` for details.
-#
-# Example:
-# firezone_container_labels_additional_labels: |
-#   my.label=1
-#   another.label="here"
-firezone_container_labels_additional_labels: ''
+firezone_generic_secret: ""
+firezone_default_admin_email: ""
+firezone_default_admin_password: ""
 
 firezone_telemetry_enabled: false
 firezone_wireguard_container_port: 51820
