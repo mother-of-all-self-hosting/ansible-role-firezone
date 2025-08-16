@@ -12,9 +12,7 @@ firezone_enabled: true
 
 firezone_identifier: firezone
 firezone_base_path: "/{{ firezone_identifier }}"
-firezone_config_path: "{{ firezone_base_path }}/config"
 firezone_data_path: "{{ firezone_base_path }}/data"
-firezone_env_path: "{{ firezone_config_path }}/env"
 
 # renovate: datasource=docker depName=firezone/firezone
 firezone_version: 0.7.36

@@ -32,8 +32,8 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       --sysctl="net.ipv6.conf.all.disable_ipv6=0" \
       --network={{ firezone_container_network }} \
       -p {{ firezone_wireguard_bind_port }}:{{ firezone_wireguard_container_port }}/udp \
-      --env-file={{ firezone_env_path }} \
-      --label-file={{ firezone_config_path }}/labels \
+      --env-file={{ firezone_base_path }}/env \
+      --label-file={{ firezone_base_path }}/labels \
       --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
       {{ firezone_container_image }}
 

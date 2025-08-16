@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-- name: Ensure Firezone paths exist
+- name: Ensure Firezone path exists
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
@@ -13,7 +13,6 @@
     group: "{{ firezone_gid }}"
   with_items:
     - "{{ firezone_base_path }}"
-    - "{{ firezone_config_path }}"
 
 - name: Ensure Firezone data path exists
   ansible.builtin.file:
@@ -28,7 +27,7 @@
 - name: Ensure Firezone support files installed
   ansible.builtin.template:
     src: "{{ role_path }}/templates/{{ item }}.j2"
-    dest: "{{ firezone_config_path }}/{{ item }}"
+    dest: "{{ firezone_base_path }}/{{ item }}"
     owner: "{{ firezone_uid }}"
     group: "{{ firezone_gid }}"
     mode: "0640"

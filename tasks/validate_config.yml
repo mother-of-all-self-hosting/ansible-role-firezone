@@ -11,7 +11,9 @@
       Please change your configuration to rename the variable (`{{ item.old }}` -> `{{ item.new }}`).
   when: "lookup('ansible.builtin.varnames', ('^' + item.old + '$'), wantlist=True) | length > 0"
   with_items:
+    - { "old": "firezone_config_path", "new": "<removed>" }
     - { "old": "firezone_database_host", "new": "firezone_database_hostname" }
+    - { "old": "firezone_env_path", "new": "<removed>" }
 
 - name: Fail if required Firezone settings not defined
   ansible.builtin.fail:
