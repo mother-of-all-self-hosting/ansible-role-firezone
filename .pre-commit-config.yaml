@@ -33,6 +33,6 @@ repos:
     hooks:
       - id: reuse
   - repo: https://github.com/ansible/ansible-lint
-    rev: v25.7.0
+    rev: v25.8.2
     hooks:
       - id: ansible-lint
