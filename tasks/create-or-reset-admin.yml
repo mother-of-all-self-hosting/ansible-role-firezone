@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-- name: Ensure Firezone is started
+- name: Ensure Firezone service is started
   ansible.builtin.service:
     name: "{{ firezone_identifier }}"
     state: started
