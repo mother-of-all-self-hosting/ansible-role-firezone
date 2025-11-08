@@ -17,10 +17,10 @@ firezone_data_path: "{{ firezone_base_path }}/data"
 # renovate: datasource=docker depName=firezone/firezone
 firezone_version: 0.7.36
 
-firezone_uid: ''
-firezone_gid: ''
+firezone_uid: ""
+firezone_gid: ""
 
-firezone_hostname: ''
+firezone_hostname: ""
 
 firezone_container_image: "{{ firezone_container_image_registry_prefix }}firezone/firezone:{{ firezone_container_image_tag }}"
 firezone_container_image_registry_prefix: "{{ firezone_container_image_registry_prefix_upstream }}"
@@ -56,7 +56,7 @@ firezone_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 # firezone_container_labels_additional_labels: |
 #   my.label=1
 #   another.label="here"
-firezone_container_labels_additional_labels: ''
+firezone_container_labels_additional_labels: ""
 
 firezone_systemd_required_services_list: "{{ firezone_systemd_required_services_list_default + firezone_systemd_required_services_list_auto + firezone_systemd_required_services_list_custom }}"
 firezone_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
@@ -68,11 +68,11 @@ firezone_systemd_wanted_services_list_default: []
 firezone_systemd_wanted_services_list_auto: []
 firezone_systemd_wanted_services_list_custom: []
 
-firezone_database_hostname: ''
+firezone_database_hostname: ""
 firezone_database_port: 5432
 firezone_database_name: firezone
 firezone_database_username: firezone
-firezone_database_password: ''
+firezone_database_password: ""
 # Use this to set the sslmode parameter of the SSL connection
 # By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
 firezone_database_sslmode: disable
@@ -99,4 +99,4 @@ firezone_cookie_encryption_salt: "{{ ('%s' | format(firezone_generic_secret) | p
 # firezone_environment_variables_additional_variables: |
 #   MAX_DEVICES_PER_USER=5
 #   CONNECTIVITY_CHECKS_ENABLED=false
-firezone_environment_variables_additional_variables: ''
+firezone_environment_variables_additional_variables: ""
