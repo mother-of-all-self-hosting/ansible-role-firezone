@@ -50,6 +50,7 @@ firezone_container_labels_traefik_entrypoints: web-secure
 firezone_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 
 # firezone_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
+# To add your own custom labels, use `firezone_container_labels_additional_labels_custom`
 # See `roles/custom/collabora_online/templates/labels.j2` for details.
 #
 # Example:
