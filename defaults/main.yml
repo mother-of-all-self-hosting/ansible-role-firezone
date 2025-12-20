@@ -41,7 +41,7 @@ firezone_container_additional_networks_auto: []
 firezone_container_additional_networks_custom: []
 
 # firezone_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
-# See `roles/custom/firezone_firezone/templates/labels.j2` for details.
+# See `../templates/labels.j2` for details.
 #
 # To inject your own other container labels, see `firezone_container_labels_additional_labels`.
 firezone_container_labels_traefik_enabled: false
@@ -51,7 +51,7 @@ firezone_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 
 # firezone_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
 # To add your own custom labels, use `firezone_container_labels_additional_labels_custom`
-# See `roles/custom/collabora_online/templates/labels.j2` for details.
+# See `../templates/labels.j2` for details.
 #
 # Example:
 # firezone_container_labels_additional_labels: |
