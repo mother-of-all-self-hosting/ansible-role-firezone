@@ -20,6 +20,7 @@ firezone_version: 0.7.36
 firezone_uid: ""
 firezone_gid: ""
 
+# The hostname at which Firezone is served.
 firezone_hostname: ""
 
 firezone_container_image: "{{ firezone_container_image_registry_prefix }}firezone/firezone:{{ firezone_container_image_tag }}"
