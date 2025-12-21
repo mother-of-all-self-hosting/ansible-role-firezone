@@ -61,6 +61,11 @@ firezone_container_labels_additional_labels: "{{ firezone_container_labels_addit
 firezone_container_labels_additional_labels_auto: {}
 firezone_container_labels_additional_labels_custom: {}
 
+# A list of extra arguments to pass to the container (`docker create` command)
+firezone_container_extra_arguments: "{{ firezone_container_extra_arguments_auto + firezone_container_extra_arguments_custom }}"
+firezone_container_extra_arguments_auto: []
+firezone_container_extra_arguments_custom: []
+
 firezone_systemd_required_services_list: "{{ firezone_systemd_required_services_list_default + firezone_systemd_required_services_list_auto + firezone_systemd_required_services_list_custom }}"
 firezone_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
 firezone_systemd_required_services_list_auto: []

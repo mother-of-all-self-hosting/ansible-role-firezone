@@ -35,6 +35,9 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       --env-file={{ firezone_base_path }}/env \
       --label-file={{ firezone_base_path }}/labels \
       --mount type=bind,src={{ firezone_data_path }},dst=/var/firezone \
+      {% for arg in firezone_container_extra_arguments %}
+      {{ arg }} \
+      {% endfor %}
       {{ firezone_container_image }}
 
 {% for network in firezone_container_additional_networks %}
