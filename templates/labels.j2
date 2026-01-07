@@ -16,4 +16,6 @@ traefik.http.routers.{{ firezone_identifier }}.entrypoints={{ firezone_container
 traefik.http.routers.{{ firezone_identifier }}.tls.certResolver={{ firezone_container_labels_traefik_tls_certResolver }}
 traefik.http.services.{{ firezone_identifier }}.loadbalancer.server.port={{ firezone_webui_bind_port }}
 
-{{ firezone_container_labels_additional_labels }}
+{% for arg in firezone_container_labels_additional_labels %}
+{{ arg }}
+{% endfor %}
