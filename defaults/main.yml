@@ -55,7 +55,7 @@ firezone_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 # To add your own custom labels, use `firezone_container_labels_additional_labels_custom`
 #
 # Example:
-# firezone_container_labels_additional_labels_custom: |
+# firezone_container_labels_additional_labels_custom:
 #   - my.label=1
 #   - another.label="here"
 firezone_container_labels_additional_labels: "{{ firezone_container_labels_additional_labels_auto + firezone_container_labels_additional_labels_custom }}"
