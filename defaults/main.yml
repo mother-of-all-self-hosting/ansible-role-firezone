@@ -44,7 +44,7 @@ firezone_container_additional_networks_custom: []
 # firezone_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
 # See `../templates/labels.j2` for details.
 #
-# To inject your own other container labels, see `firezone_container_labels_additional_labels`.
+# To inject your own other container labels, see `firezone_container_labels_additional_labels_custom`.
 firezone_container_labels_traefik_enabled: false
 firezone_container_labels_traefik_docker_network: ""
 firezone_container_labels_traefik_entrypoints: web-secure
