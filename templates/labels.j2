@@ -14,7 +14,7 @@ traefik.http.routers.{{ firezone_identifier }}.rule=Host("{{ firezone_hostname }
 traefik.http.routers.{{ firezone_identifier }}.service={{ firezone_identifier }}
 traefik.http.routers.{{ firezone_identifier }}.entrypoints={{ firezone_container_labels_traefik_entrypoints }}
 traefik.http.routers.{{ firezone_identifier }}.tls.certResolver={{ firezone_container_labels_traefik_tls_certResolver }}
-traefik.http.services.{{ firezone_identifier }}.loadbalancer.server.port={{ firezone_webui_bind_port }}
+traefik.http.services.{{ firezone_identifier }}.loadbalancer.server.port={{ firezone_container_http_port }}
 
 {% for arg in firezone_container_labels_additional_labels %}
 {{ arg }}
