@@ -32,6 +32,15 @@ firezone_container_image_force_pull: "{{ firezone_container_image.endswith(':lat
 
 firezone_container_network: "{{ firezone_identifier }}"
 
+# Specify how the container publishes its Wireguard port (as defined by `firezone_wireguard_container_port`).
+#
+# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:9100"), just a port number or empty string to not expose.
+firezone_wireguard_bind_port: "{{ firezone_wireguard_container_port }}"
+
+# The port number for Wireguard in the container
+firezone_wireguard_container_port: 51820
+
+# The port number in the container
 firezone_webui_bind_port: 13000
 
 # A list of additional container networks that the container would be connected to.
@@ -91,8 +100,6 @@ firezone_default_admin_email: ""
 firezone_default_admin_password: ""
 
 firezone_telemetry_enabled: false
-firezone_wireguard_container_port: 51820
-firezone_wireguard_bind_port: "{{ firezone_wireguard_container_port }}"
 
 firezone_guardian_secret_key: "{{ ('%s' | format(firezone_generic_secret) | password_hash('sha512', 'fz.gd.sc.key', rounds=655555))[-64:] | b64encode | truncate(32, True, '') }}"
 firezone_database_encryption_key: ""
