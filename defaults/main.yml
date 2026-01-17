@@ -30,6 +30,7 @@ firezone_container_image_registry_prefix_upstream_default: docker.io/
 firezone_container_image_tag: "{{ firezone_version }}"
 firezone_container_image_force_pull: "{{ firezone_container_image.endswith(':latest') }}"
 
+# The base container network. It will be auto-created by this role if it doesn't exist already.
 firezone_container_network: "{{ firezone_identifier }}"
 
 # Specify how the container publishes its Wireguard port (as defined by `firezone_container_wireguard_port`).
