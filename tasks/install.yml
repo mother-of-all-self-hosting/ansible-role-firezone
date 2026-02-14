@@ -61,8 +61,9 @@
     name: "{{ firezone_container_network }}"
     driver: bridge
     driver_options: "{{ devture_systemd_docker_base_container_networks_driver_options }}"
+  register: firezone_network_creation_result
 
-- name: Ensure Firezone container network exists via ansible.builtin.command
+- name: Ensure Firezone container network is created via ansible.builtin.command
   when: devture_systemd_docker_base_container_network_creation_method == 'command'
   ansible.builtin.command:
     cmd: >-
@@ -70,8 +71,9 @@
       {% if devture_systemd_docker_base_ipv6_enabled %}--ipv6{% endif %}
       {{ devture_systemd_docker_base_container_networks_driver_options_string }}
       {{ firezone_container_network }}
-  register: network_creation_result
-  failed_when: network_creation_result.rc != 0 and 'already exists' not in network_creation_result.stderr
+  register: firezone_network_creation_result
+  changed_when: firezone_network_creation_result.rc == 0
+  failed_when: firezone_network_creation_result.rc != 0 and 'already exists' not in firezone_network_creation_result.stderr
 
 - name: Ensure Firezone systemd service is present
   ansible.builtin.template:
