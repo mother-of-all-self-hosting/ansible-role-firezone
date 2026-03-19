@@ -9,6 +9,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Firezone Ansible role
 
+**This role has been deprecated in favor of [ansible-role-wg-easy](https://github.com/mother-of-all-self-hosting/ansible-role-wg-easy).**
+
 >[!WARNING]
 > This role is configured to install the legacy 0.7 version of Firezone which has reached end-of-life status and stopped receiving updates since January 31st, 2024. For later versions, Firezone, Inc. does not provide support for self-hosting in production, while the source code remains provided for self-hosting Firezone for merely *educational* or *hobby* purposes. See [this page](https://web.archive.org/web/20241230194456/https://github.com/firezone/firezone/blob/main/docs/README.md#can-i-self-host-firezone) for details.
 
